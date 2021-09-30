@@ -2,8 +2,7 @@
  * @file fwlist.h
  * @author dartax009 (Pedrato)
  * @brief Библиотечка для работы с односвязными списками.
- * В структуру "Элемент списка" (s_element) пишим свои переменные, которые хотим использовать.
- * @version 1.0
+ * @version 2.0
  * @date 2021-09-24
  * Что-то даже работает.
  * @copyright Copyright (c) 2021
@@ -19,24 +18,14 @@
 #include <string.h>
 
 /**
- * @brief Элемент списка
- */
-typedef struct _s_element
-{
-	uint8_t data[2];				///>Значение элемента списка
-}s_element;
-
-/**
  * @brief Звено списка
  */
 struct _s_mas
 {
-	s_element value;				///>Элемент списка
+	void *value;					///>Элемент списка
 	struct _s_mas *next;			///>Указатель на следующее звено
 };
 typedef struct _s_mas s_mas;
-
-
 
 //---------------------------------------------------//
 //-----------------Прототипы функций-----------------//
@@ -46,20 +35,22 @@ typedef struct _s_mas s_mas;
  * @brief Добавляет следующий элемент в список
  *
  * @param head	[out]	- указатель на новый добавленный элемент
- * @param val	[in]	- значение нового элемента
+ * @param val	[in]	- значение элемента списка
+ * @param el	[in]	- размер элемента списка в байтах
  */
-void push (s_mas **head, const void *val);
+void push (s_mas **head, const void *val, const size_t el);
 
 /**
  * @brief Удаляет первый элемент и возвращает его значение
  *
  * @param head	[out]	- указатель на предыдущий элемент или NULL
- * @param val	[out]	- значение удаленного элемента
+ * @param val	[out]	- значение удаленного элемента списка
+ * @param el	[in]	- размер элемента списка в байтах
  * @return uint8_t	- успешность исполнения
  * [0] - успешно
- * [1] - ошибка. передан указатель на NULL
+ * [1] - ошибка. Передан указатель на NULL
  */
-uint8_t pop (s_mas **head, void *val);
+uint8_t pop (s_mas **head, void *val, const size_t el);
 
 /**
  * @brief Возвращает указатель на n-ый элемент списка
@@ -75,12 +66,13 @@ s_mas *findN (s_mas *head, const uint64_t n);
  *
  * @param head	[in]	- указатель на список
  * @param n		[in]	- нужный элемент
- * @param val	[in]	- новое значение элемента
+ * @param val	[in]	- значение элемента списка
+ * @param el	[in]	- размер элемента списка в байтах
  * @return uint8_t	- успешность исполнения
  * [0] - успешно
- * [1] - ошибка. такой элемент не найден
+ * [1] - ошибка. Такой элемент не найден
  */
-uint8_t pushN (s_mas *head, const uint32_t n, const void *val);
+uint8_t pushN (s_mas *head, const uint32_t n, const void *val, const size_t el);
 
 /**
  * @brief Возвращает указатель последнего элемента списка
@@ -91,22 +83,24 @@ uint8_t pushN (s_mas *head, const uint32_t n, const void *val);
 s_mas *findLast (s_mas *head);
 
 /**
- * @brief Вписывает элемент в конец списка
+ * @brief Добавляет элемент в конец списка
  *
  * @param head 	[in]	- указатель на список. Если передан NULL так же буде являться первым элементом
- * @param val 	[in]	- указатель значения нового элемента
+ * @param val 	[in]	- значение элемента списка
+ * @param el	[in]	- размер элемента списка в байтах
  */
-void pushBack (s_mas **head, const void *val);
+void pushBack (s_mas **head, const void *val, const size_t el);
 
 /**
  * @brief Удаляет последний элемент и возвразает его значение
  *
  * @param head	[in]	- указатель на указатель списка. Устанавливается в NULL если это был последний элемент
- * @param val	[out]	- значение удаленного элемента
+ * @param val	[out]	- значение удаленного элемента списка
+ * @param el	[in]	- размер элемента списка в байтах
  * @return uint8_t	- результат выполнения
  * [0] - успешно
- * [1] - ошибка. передан указатель на NULL
+ * [1] - ошибка. Передан указатель на NULL
  */
-uint8_t popBack (s_mas **head, void *val);
+uint8_t popBack (s_mas **head, void *val, const size_t el);
 
 #endif
