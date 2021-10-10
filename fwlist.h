@@ -2,7 +2,7 @@
  * @file fwlist.h
  * @author dartax009 (Pedrato)
  * @brief Библиотечка для работы с односвязными списками.
- * @version 3.0
+ * @version 3.1
  * @date 2021-10-10
  * Что-то даже работает.
  * @copyright Copyright (c) 2021
@@ -16,6 +16,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+
+//---------------------------------------------------//
+//---------------Возвращаемые значения---------------//
+//---------------------------------------------------//
+#define ERROR_MEM_ALLOC		2			///> Ошибка выделения памяти
+#define ERROR_POINT_IS_NULL	1			///> Передан указатель на NULL или нет искомого элемента
+#define NOT_ERROR			0			///> Ошибок нет, все ок
 
 /**
  * @brief Звено списка
@@ -38,8 +45,8 @@ typedef struct _s_mas s_mas;
  * @param val	[in]	- указатель на значение элемента списка
  * @param el	[in]	- размер элемента списка в байтах
  * @return uint8_t	- успешность исполнения
- * [0] - успешно
- * [1] - ошибка. Не успешное выделение памяти
+ * [NOT_ERROR]			- успешно
+ * [ERROR_MEM_ALLOC]	- ошибка. Не успешное выделение памяти
  */
 uint8_t push (s_mas **head, const void *val, const size_t el);
 
@@ -50,8 +57,8 @@ uint8_t push (s_mas **head, const void *val, const size_t el);
  * @param val	[out]	- указатель на значение удаленного элемента списка. Если передать 0, то элемент удет утерен
  * @param el	[in]	- размер элемента списка в байтах
  * @return uint8_t	- успешность исполнения
- * [0] - успешно
- * [1] - ошибка. Передан указатель на NULL
+ * [NOT_ERROR] 				- успешно
+ * [ERROR_POINT_IS_NULL]	- ошибка. Передан указатель на NULL
  */
 uint8_t pop (s_mas **head, void *val, const size_t el);
 
@@ -72,8 +79,8 @@ s_mas *findN (s_mas *head, const uint64_t n);
  * @param val	[in]	- указатель на значение элемента списка
  * @param el	[in]	- размер элемента списка в байтах
  * @return uint8_t	- успешность исполнения
- * [0] - успешно
- * [1] - ошибка. Такой элемент не найден
+ * [NOT_ERROR]				- успешно
+ * [ERROR_POINT_IS_NULL]	- ошибка. Такой элемент не найден или передан указатель на NULL
  */
 uint8_t setN (s_mas *head, const uint64_t n, const void *val, const size_t el);
 
@@ -92,8 +99,8 @@ s_mas *findLast (s_mas *head);
  * @param val 	[in]	- указатель на значение элемента списка
  * @param el	[in]	- размер элемента списка в байтах
  * @return uint8_t	- успешность исполнения
- * [0] - успешно
- * [1] - ошибка. Не успешное выделение памяти
+ * [NOT_ERROR]			- успешно
+ * [ERROR_MEM_ALLOC]	- ошибка. Не успешное выделение памяти
  */
 uint8_t pushBack (s_mas **head, const void *val, const size_t el);
 
@@ -104,8 +111,8 @@ uint8_t pushBack (s_mas **head, const void *val, const size_t el);
  * @param val	[out]	- указатель на значение удаленного элемента списка. Если передать 0, то элемент будет утерен
  * @param el	[in]	- размер элемента списка в байтах
  * @return uint8_t	- результат выполнения
- * [0] - успешно
- * [1] - ошибка. Передан указатель на NULL
+ * [NOT_ERROR]				- успешно
+ * [ERROR_POINT_IS_NULL]	- ошибка. Передан указатель на NULL
  */
 uint8_t popBack (s_mas **head, void *val, const size_t el);
 
@@ -117,9 +124,9 @@ uint8_t popBack (s_mas **head, void *val, const size_t el);
  * @param val	[in]	- указатель на значение нового элемента
  * @param el	[in]	- размер элемента списка в байтах
  * @return uint8_t - результат выполнения
- * [0] - успешно
- * [1] - ошибка. Такого элемента нет
- * [2] - ошибка. Не успешное выделение памяти
+ * [NOT_ERROR]				- успешно
+ * [ERROR_POINT_IS_NULL]	- ошибка. Такого элемента нет
+ * [ERROR_MEM_ALLOC]		- ошибка. Неуспешное выделение памяти
  */
 uint8_t pushN (s_mas *head, const uint64_t n, const void *val, const size_t el);
 
@@ -131,8 +138,8 @@ uint8_t pushN (s_mas *head, const uint64_t n, const void *val, const size_t el);
  * @param val	[out]	- указатель на значение удаленного элемента списка. Если передать 0, то элемент будет утерен
  * @param el	[in]	- размер элемента списка в байтах
  * @return uint8_t	- результат выполнения
- * [0] - успешно
- * [1] - ошибка. Передан указатель на NULL или нет такого элемента
+ * [NOT_ERROR]				- успешно
+ * [ERROR_POINT_IS_NULL]	- ошибка. Передан указатель на NULL или нет такого элемента
  */
 uint8_t popN (s_mas **head, const uint64_t n, void *val, const size_t el);
 

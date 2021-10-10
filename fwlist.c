@@ -5,25 +5,25 @@ uint8_t push (s_mas **head, const void *val, const size_t el)
 	s_mas *tmp = NULL;
 	tmp = (s_mas *) malloc(sizeof(s_mas));
 	if (tmp == NULL)
-		return 1;
+		return ERROR_MEM_ALLOC;
 
 	tmp->value = NULL;
 	tmp->value = malloc(el);
 	if (tmp->value == NULL)
-		return 1;
+		return ERROR_MEM_ALLOC;
 
 	memcpy(tmp->value, val, el);
 
 	tmp->next	= (*head);
 	(*head)		= tmp;
 
-	return 0;
+	return NOT_ERROR;
 }
 
 uint8_t pop (s_mas **head, void *val, const size_t el)
 {
 	if((*head) == NULL)
-		return 1;
+		return ERROR_POINT_IS_NULL;
 
 	s_mas *tmp = NULL;
 
@@ -37,7 +37,7 @@ uint8_t pop (s_mas **head, void *val, const size_t el)
 	free(tmp->value);
 	free(tmp);
 
-	return 0;
+	return NOT_ERROR;
 }
 
 s_mas *findN (s_mas *head, const uint64_t n)
@@ -58,11 +58,11 @@ uint8_t setN (s_mas *head, const uint64_t n, const void *val, const size_t el)
 {
 	head = findN(head, n);
 	if (head == NULL)
-		return 1;
+		return ERROR_POINT_IS_NULL;
 	else
 		memcpy(head->value, val, el);
 
-	return 0;
+	return NOT_ERROR;
 }
 
 s_mas *findLast (s_mas *head)
@@ -83,12 +83,12 @@ uint8_t pushBack (s_mas **head, const void *val, const size_t el)
 	s_mas *tmp = NULL;
 	tmp = (s_mas *) malloc(sizeof(s_mas));
 	if (tmp == NULL)
-		return 1;
+		return ERROR_MEM_ALLOC;
 
 	tmp->value = NULL;
 	tmp->value = malloc(el);
 	if (tmp->value == NULL)
-		return 1;
+		return ERROR_MEM_ALLOC;
 
 	memcpy(tmp->value, val, el);
 	tmp->next = NULL;
@@ -98,13 +98,13 @@ uint8_t pushBack (s_mas **head, const void *val, const size_t el)
 	else
 		last->next = tmp;
 
-	return 0;
+	return NOT_ERROR;
 }
 
 uint8_t popBack (s_mas **head, void *val, const size_t el)
 {
 	if((*head) == NULL)
-		return 1;
+		return ERROR_POINT_IS_NULL;
 
 	if ((*head)->next == NULL)
 	{
@@ -128,7 +128,7 @@ uint8_t popBack (s_mas **head, void *val, const size_t el)
 	free(tmp->next->value);
 	free(tmp->next);
 	tmp->next = NULL;
-	return 0;
+	return NOT_ERROR;
 }
 
 uint8_t pushN (s_mas *head, const uint64_t n, const void *val, const size_t el)
@@ -136,17 +136,17 @@ uint8_t pushN (s_mas *head, const uint64_t n, const void *val, const size_t el)
 	head = findN(head, n);
 
 	if (head == NULL)
-		return 1;
+		return ERROR_POINT_IS_NULL;
 
 	s_mas *tmp = NULL;
 	tmp = (s_mas *) malloc(sizeof(s_mas));
 	if (tmp == NULL)
-		return 2;
+		return ERROR_MEM_ALLOC;
 
 	tmp->value = NULL;
 	tmp->value = malloc(el);
 	if (tmp->value == NULL)
-		return 2;
+		return ERROR_MEM_ALLOC;
 
 	memcpy(tmp->value, val, el);
 
@@ -154,7 +154,7 @@ uint8_t pushN (s_mas *head, const uint64_t n, const void *val, const size_t el)
 
 	head->next = tmp;
 
-	return 0;
+	return NOT_ERROR;
 }
 
 uint8_t popN (s_mas **head, const uint64_t n, void *val, const size_t el)
@@ -164,7 +164,7 @@ uint8_t popN (s_mas **head, const uint64_t n, void *val, const size_t el)
 
 	s_mas *ahead = findN( (*head), n-1);
 	if (ahead == NULL || ahead->next == NULL)
-		return 1;
+		return ERROR_POINT_IS_NULL;
 
 	s_mas *tmp = ahead->next;
 
@@ -175,5 +175,5 @@ uint8_t popN (s_mas **head, const uint64_t n, void *val, const size_t el)
 	free(tmp->value);
 	free(tmp);
 
-	return 0;
+	return NOT_ERROR;
 }
