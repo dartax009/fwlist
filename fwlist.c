@@ -1,16 +1,23 @@
 #include "fwlist.h"
 
-void push (s_mas **head, const void *val, const size_t el)
+uint8_t push (s_mas **head, const void *val, const size_t el)
 {
-	s_mas *tmp = (s_mas *) malloc(sizeof(s_mas));
+	s_mas *tmp = NULL;
+	tmp = (s_mas *) malloc(sizeof(s_mas));
+	if (tmp == NULL)
+		return 1;
+
+	tmp->value = NULL;
 	tmp->value = malloc(el);
+	if (tmp->value == NULL)
+		return 1;
 
 	memcpy(tmp->value, val, el);
 
 	tmp->next	= (*head);
 	(*head)		= tmp;
 
-	return;
+	return 0;
 }
 
 uint8_t pop (s_mas **head, void *val, const size_t el)
@@ -21,7 +28,10 @@ uint8_t pop (s_mas **head, void *val, const size_t el)
 	s_mas *tmp = NULL;
 
 	tmp = (*head);
-	memcpy(val, tmp->value, el);
+
+	if (val != 0)
+		memcpy(val, tmp->value, el);
+
 	(*head) = (*head)->next;
 
 	free(tmp->value);
@@ -32,6 +42,9 @@ uint8_t pop (s_mas **head, void *val, const size_t el)
 
 s_mas *findN (s_mas *head, const uint64_t n)
 {
+	if (head == NULL)
+		return NULL;
+
 	for (uint64_t i=0; i<n; i++)
 	{
 		head = head->next;
@@ -41,7 +54,7 @@ s_mas *findN (s_mas *head, const uint64_t n)
 	return head;
 }
 
-uint8_t pushN (s_mas *head, const uint32_t n, const void *val, const size_t el)
+uint8_t setN (s_mas *head, const uint64_t n, const void *val, const size_t el)
 {
 	head = findN(head, n);
 	if (head == NULL)
@@ -63,12 +76,19 @@ s_mas *findLast (s_mas *head)
 	return head;
 }
 
-void pushBack (s_mas **head, const void *val, const size_t el)
+uint8_t pushBack (s_mas **head, const void *val, const size_t el)
 {
 	s_mas *last = findLast((*head));
 
-	s_mas *tmp = (s_mas *) malloc(sizeof(s_mas));
+	s_mas *tmp = NULL;
+	tmp = (s_mas *) malloc(sizeof(s_mas));
+	if (tmp == NULL)
+		return 1;
+
+	tmp->value = NULL;
 	tmp->value = malloc(el);
+	if (tmp->value == NULL)
+		return 1;
 
 	memcpy(tmp->value, val, el);
 	tmp->next = NULL;
@@ -78,7 +98,7 @@ void pushBack (s_mas **head, const void *val, const size_t el)
 	else
 		last->next = tmp;
 
-	return;
+	return 0;
 }
 
 uint8_t popBack (s_mas **head, void *val, const size_t el)
@@ -102,10 +122,58 @@ uint8_t popBack (s_mas **head, void *val, const size_t el)
 	while (tmp->next->next != NULL)
 		tmp = tmp->next;
 
-	memcpy(val, tmp->next->value, el);
+	if (val != 0)
+		memcpy(val, tmp->next->value, el);
 
 	free(tmp->next->value);
 	free(tmp->next);
 	tmp->next = NULL;
+	return 0;
+}
+
+uint8_t pushN (s_mas *head, const uint64_t n, const void *val, const size_t el)
+{
+	head = findN(head, n);
+
+	if (head == NULL)
+		return 1;
+
+	s_mas *tmp = NULL;
+	tmp = (s_mas *) malloc(sizeof(s_mas));
+	if (tmp == NULL)
+		return 2;
+
+	tmp->value = NULL;
+	tmp->value = malloc(el);
+	if (tmp->value == NULL)
+		return 2;
+
+	memcpy(tmp->value, val, el);
+
+	tmp->next = head->next;
+
+	head->next = tmp;
+
+	return 0;
+}
+
+uint8_t popN (s_mas **head, const uint64_t n, void *val, const size_t el)
+{
+	if (n == 0)
+		return pop(head, val, el);
+
+	s_mas *ahead = findN( (*head), n-1);
+	if (ahead == NULL || ahead->next == NULL)
+		return 1;
+
+	s_mas *tmp = ahead->next;
+
+	if (val != 0)
+		memcpy(val, tmp->value, el);
+
+	ahead->next = tmp->next;
+	free(tmp->value);
+	free(tmp);
+
 	return 0;
 }
