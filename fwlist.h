@@ -37,8 +37,11 @@ typedef struct _s_mas s_mas;
  * @param head	[out]	- указатель на новый добавленный элемент
  * @param val	[in]	- указатель на значение элемента списка
  * @param el	[in]	- размер элемента списка в байтах
+ * @return uint8_t	- успешность исполнения
+ * [0] - успешно
+ * [1] - ошибка. Не успешное выделение памяти
  */
-void push (s_mas **head, const void *val, const size_t el);
+uint8_t push (s_mas **head, const void *val, const size_t el);
 
 /**
  * @brief Удаляет первый элемент и возвращает его значение
@@ -88,8 +91,11 @@ s_mas *findLast (s_mas *head);
  * @param head 	[in]	- указатель на список. Если передан NULL так же буде являться первым элементом
  * @param val 	[in]	- указатель на значение элемента списка
  * @param el	[in]	- размер элемента списка в байтах
+ * @return uint8_t	- успешность исполнения
+ * [0] - успешно
+ * [1] - ошибка. Не успешное выделение памяти
  */
-void pushBack (s_mas **head, const void *val, const size_t el);
+uint8_t pushBack (s_mas **head, const void *val, const size_t el);
 
 /**
  * @brief Удаляет последний элемент и возвразает его значение
@@ -113,6 +119,7 @@ uint8_t popBack (s_mas **head, void *val, const size_t el);
  * @return uint8_t - результат выполнения
  * [0] - успешно
  * [1] - ошибка. Такого элемента нет
+ * [2] - ошибка. Не успешное выделение памяти
  */
 uint8_t pushN (s_mas *head, const uint64_t n, const void *val, const size_t el);
 
