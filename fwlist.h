@@ -2,8 +2,8 @@
  * @file fwlist.h
  * @author dartax009 (Pedrato)
  * @brief Библиотечка для работы с односвязными списками.
- * @version 2.0
- * @date 2021-09-24
+ * @version 3.0
+ * @date 2021-10-10
  * Что-то даже работает.
  * @copyright Copyright (c) 2021
  * Ну юзуй, че.
